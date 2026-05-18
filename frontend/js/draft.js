@@ -15,3 +15,11 @@ window.addEventListener('load', () => {
         }
     }
 });
+form.addEventListener('input', () => {
+    const data = {
+        title: document.getElementById('task-title').value,
+        description: document.getElementById('task-description').value,
+        priority: document.getElementById('task-priority').value
+    };
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(data));
+});
