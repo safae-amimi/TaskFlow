@@ -21,3 +21,5 @@ async function markAsRead(id) {
   });
   fetchNotifications(); 
 }
+fetchNotifications();
+setInterval(fetchNotifications, 30000);
