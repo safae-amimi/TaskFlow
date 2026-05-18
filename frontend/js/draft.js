@@ -23,3 +23,6 @@ form.addEventListener('input', () => {
     };
     localStorage.setItem(DRAFT_KEY, JSON.stringify(data));
 });
+form.addEventListener('submit', () => {
+    localStorage.removeItem(DRAFT_KEY);
+});
