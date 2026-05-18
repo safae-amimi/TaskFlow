@@ -12,3 +12,10 @@ const projectSchema = new mongoose.Schema({
     owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     members: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 }, { timestamps: true });
+projectSchema.pre('deleteOne', { document: true, query: false }, async function (next) {
+    await mongoose.model('Task').deleteMany({ project: this._id });
+    await mongoose.model('Activity').deleteMany({ project: this._id });
+    next();
+});
+
+module.exports = mongoose.model('Project', projectSchema);
