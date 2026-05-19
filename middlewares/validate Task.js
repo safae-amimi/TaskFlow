@@ -1,7 +1,7 @@
 const validateCreateTask = (req, res, next) => {
-  const { tilre, priority, project } = req.body;
+  const { title, priority, project } = req.body;
   const errors = [];
-  if (!tilre || tilre.trim() === '') {
+  if (!title || title.trim() === '') {
     errors.push('Le titre est obligatoire');
   }
   const prioritesValides = ['basse', 'moyenne', 'haute'];
@@ -20,17 +20,17 @@ const validateCreateTask = (req, res, next) => {
   next();
 };
 const validateUpdateStatus = (req, res, next) => {
-  const { statut } = req.body;
+  const { status } = req.body;
   const statutsValides = ['à faire', 'en cours', 'terminé'];
  
-  if (!statut) {
+  if (!status) {
     return res.status(400).json({
       success: false,
       message: 'Le statut est obligatoire',
     });
   }
  
-  if (!statutsValides.includes(statut)) {
+  if (!statusValides.includes(statut)) {
     return res.status(400).json({
       success: false,
       message: 'Le statut doit être: à faire, en cours ou terminé',
