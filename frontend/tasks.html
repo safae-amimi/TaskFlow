@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Tâches - TaskFlow</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <nav>
+    <h1>TaskFlow</h1>
+    <div>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="projects.html">Projets</a>
+      <a href="notifications.html">
+        🔔 <span id="notif-badge" style="display:none; background:red; color:white; border-radius:50%; padding:2px 6px;">0</span>
+      </a>
+      <button onclick="logout()">Déconnexion</button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h2>Tâches du projet</h2>
+
+    <!-- Filtres (Feat 6) -->
+    <div class="filters">
+      <input type="text" id="search" placeholder="🔍 Rechercher..." oninput="loadTasks()" />
+      <select id="filter-status" onchange="loadTasks()">
+        <option value="">Tous les statuts</option>
+        <option value="à faire">À faire</option>
+        <option value="en cours">En cours</option>
+        <option value="terminé">Terminé</option>
+      </select>
+      <select id="filter-priority" onchange="loadTasks()">
+        <option value="">Toutes priorités</option>
+        <option value="basse">Basse</option>
+        <option value="moyenne">Moyenne</option>
+        <option value="haute">Haute</option>
+      </select>
+    </div>
+
+    <!-- Formulaire tâche (Feat 7 - Draft) -->
+    <div class="card">
+      <h3>Nouvelle Tâche</h3>
+      <form id="task-form">
+        <input type="text" id="task-title" placeholder="Titre de la tâche" required />
+        <textarea id="task-description" placeholder="Description"></textarea>
+        <select id="task-priority">
+          <option value="basse">Basse</option>
+          <option value="moyenne">Moyenne</option>
+          <option value="haute">Haute</option>
+        </select>
+        <button type="submit">Créer la tâche</button>
+      </form>
+    </div>
+
+    <!-- Liste tâches -->
+    <div id="tasks-list"></div>
+
+    <!-- Pagination -->
+    <div id="pagination">
+      <button onclick="changePage(-1)">◀</button>
+      <span id="page-info"></span>
+      <button onclick="changePage(1)">▶</button>
+    </div>
+
+    <!-- Historique activités (Feat 9) -->
+    <div class="card">
+      <h3>📜 Historique des activités</h3>
+      <div id="activity-feed"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="js/tasks.js"></script>
+  <script src="js/draft.js"></script>
+  <script src="js/activities.js"></script>
+  <script src="js/notifications.js"></script>
+</body>
+</html>
