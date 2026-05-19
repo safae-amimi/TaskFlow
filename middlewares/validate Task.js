@@ -30,7 +30,7 @@ const validateUpdateStatus = (req, res, next) => {
     });
   }
  
-  if (!statusValides.includes(statut)) {
+  if (!statutsValides.includes(statuts)) {
     return res.status(400).json({
       success: false,
       message: 'Le statut doit être: à faire, en cours ou terminé',
@@ -42,3 +42,4 @@ const validateUpdateStatus = (req, res, next) => {
  
 module.exports = { validateCreateTask, validateUpdateStatus };
  
+
