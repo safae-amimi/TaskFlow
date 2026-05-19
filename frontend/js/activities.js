@@ -1,3 +1,6 @@
+requireAuth();      
+renderNavbar();     
+showUsername();
 const projectId = new URLSearchParams(window.location.search).get('projectId');
 const token = localStorage.getItem('token');
 

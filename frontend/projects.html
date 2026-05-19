@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Mes Projets - TaskFlow</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/router.js"></script> 
+</head>
+<body>
+    <nav id="navbar"></nav>
+  <nav>
+    <h1>TaskFlow</h1>
+    <div>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="projects.html">Projets</a>
+      <a href="notifications.html">
+        🔔 <span id="notif-badge" style="display:none; background:red; color:white; border-radius:50%; padding:2px 6px;">0</span>
+      </a>
+      <button onclick="logout()">Déconnexion</button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h2>Mes Projets</h2>
+
+    <div class="card">
+      <h3>Nouveau Projet</h3>
+      <input type="text" id="proj-title" placeholder="Titre du projet" />
+      <input type="text" id="proj-desc" placeholder="Description" />
+      <input type="date" id="proj-deadline" />
+      <button onclick="createProject()">Créer</button>
+    </div>
+
+    <div id="projects-list"></div>
+
+    <div id="pagination">
+      <button onclick="changePage(-1)">◀ Précédent</button>
+      <span id="page-info"></span>
+      <button onclick="changePage(1)">Suivant ▶</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="js/projects.js"></script>
+  <script src="js/notifications.js"></script>
+</body>
+</html>

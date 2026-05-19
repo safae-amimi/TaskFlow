@@ -1,4 +1,6 @@
-
+requireAuth();      
+renderNavbar();     
+showUsername();
 if (localStorage.getItem('token')) {
   window.location.href = 'dashboard.html';
 }
