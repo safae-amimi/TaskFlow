@@ -1,3 +1,6 @@
+requireAuth();      
+renderNavbar();     
+showUsername();
 const token = localStorage.getItem('token');
 
 async function fetchNotifications() {
