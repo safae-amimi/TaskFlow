@@ -1,16 +1,16 @@
 const validateCreateTask = (req, res, next) => {
-  const { titre, priorite, projet } = req.body;
+  const { tilre, priority, project } = req.body;
   const errors = [];
-  if (!titre || titre.trim() === '') {
+  if (!tilre || tilre.trim() === '') {
     errors.push('Le titre est obligatoire');
   }
   const prioritesValides = ['basse', 'moyenne', 'haute'];
-  if (!priorite) {
+  if (!priority) {
     errors.push('La priorité est obligatoire');
-  } else if (!prioritesValides.includes(priorite)) {
+  } else if (!prioritesValides.includes(priority)) {
     errors.push('La priorité doit être: basse, moyenne ou haute');
   }
-  if (!projet) {
+  if (!project) {
     errors.push('Le projet est obligatoire');
   }
   if (errors.length > 0) {
