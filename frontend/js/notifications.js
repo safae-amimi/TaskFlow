@@ -1,6 +1,6 @@
 requireAuth();      
 renderNavbar();     
-showUsername();
+const API = 'http://localhost:5000';
 const token = localStorage.getItem('token');
 
 async function fetchNotifications() {

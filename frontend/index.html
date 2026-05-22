@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>TaskFlow — Connexion</title>
   <link rel="stylesheet" href="css/style.css">
+ 
 </head>
 <body class="auth-page">
     <nav id="navbar"></nav> 
@@ -30,12 +31,14 @@
       <input type="text" id="reg-name" placeholder="Nom complet" />
       <input type="email" id="reg-email" placeholder="Email" />
       <input type="password" id="reg-password" placeholder="Mot de passe" />
-      <button onclick="register()">Créer un compte</button>
+      <button type="button" onclick="register()">Créer un compte</button>
       <p id="reg-error" class="error"></p>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
   <script src="js/auth.js"></script>
+
 </body>
 </html>

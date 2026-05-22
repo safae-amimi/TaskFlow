@@ -1,6 +1,6 @@
 requireAuth();      
 renderNavbar();     
-showUsername();
+const API = 'http://localhost:5000';
 const projectId = new URLSearchParams(window.location.search).get('projectId');
 const token = localStorage.getItem('token');
 

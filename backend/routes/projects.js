@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const Project = require('../models/Project');
+const Project = require('../models/project');
 const Activity = require('../models/Activity');
-const auth = require('../middleware/auth');
-router.get('/', auth, async (req, res) => {
+const { protect } = require('../middleware/auth');
+router.get('/',  protect, async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
@@ -15,13 +15,13 @@ const total = await Project.countDocuments({
 });
 res.json({ data: projects, total, page, totalPages: Math.ceil(total / limit) });
 });
-router.post('/', auth, async (req, res) => {
+router.post('/',  protect, async (req, res) => {
     const { title, description, deadline } = req.body;
     const project = new Project({ title, description, deadline, owner: req.user.id });
     await project.save();
     res.status(201).json(project);
 });
-router.put('/:id', auth, async (req, res) => {
+router.put('/:id',  protect, async (req, res) => {
     const project = await Project.findOne({ _id: req.params.id, owner: req.user.id });
     if (!project) return res.status(404).json({ message: 'Non trouvé ou non autorisé' });
     Object.assign(project, req.body);
@@ -36,7 +36,7 @@ router.put('/:id', auth, async (req, res) => {
 
     res.json(project);
 });
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:id', protect, async (req, res) => {
     const project = await Project.findOne({ _id: req.params.id, owner: req.user.id });
     if (!project) return res.status(404).json({ message: 'Non trouvé ou non autorisé' });
     await project.deleteOne();

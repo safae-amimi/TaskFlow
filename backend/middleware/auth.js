@@ -1,21 +1,30 @@
-
 const jwt = require('jsonwebtoken');
+const User = require('../models/User');
 
-const auth = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
-
-  if (!token) {
-    return res.status(401).json({ message: 'Token manquant' });
-  }
-
+const protect = async (req, res, next) => {
   try {
+    // 1. Récupérer le token depuis le header
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ message: 'Non autorisé — token manquant' });
+    }
+
+    const token = authHeader.split(' ')[1];
+
+    // 2. Vérifier le token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
+
+    // 3. Récupérer l'utilisateur sans le mot de passe
+    const user = await User.findById(decoded.id).select('-password');
+    if (!user) {
+      return res.status(401).json({ message: 'Utilisateur introuvable' });
+    }
+
+    req.user = user;
     next();
-  } catch (err) {
-    return res.status(403).json({ message: 'Token invalide' });
+  } catch (error) {
+    return res.status(401).json({ message: 'Token invalide ou expiré' });
   }
 };
 
-module.exports = auth; 
+module.exports = { protect };

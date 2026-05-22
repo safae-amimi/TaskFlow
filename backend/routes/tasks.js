@@ -1,13 +1,13 @@
 
 const express = require('express');
 const router = express.Router();
-const Task = require('../models/Task');
+const Task = require('../models/task');
 const Activity = require('../models/Activity');
 const Notification = require('../models/Notification');
-const auth = require('../middleware/auth');
+const { protect } = require('../middleware/auth');
 
 // GET tasks with filter + search + pagination
-router.get('/project/:projectId', auth, async (req, res) => {
+router.get('/project/:projectId',  protect, async (req, res) => {
   const { status, priority, assignedTo, search, page = 1, limit = 10 } = req.query;
   const filter = { project: req.params.projectId };
 
@@ -29,7 +29,7 @@ router.get('/project/:projectId', auth, async (req, res) => {
 });
 
 // POST create task
-router.post('/', auth, async (req, res) => {
+router.post('/',  protect, async (req, res) => {
   const task = new Task({ ...req.body });
   await task.save();
 
@@ -53,7 +53,7 @@ router.post('/', auth, async (req, res) => {
 });
 
 // PATCH update status
-router.patch('/:id/status', auth, async (req, res) => {
+router.patch('/:id/status',  protect, async (req, res) => {
   const task = await Task.findByIdAndUpdate(
     req.params.id,
     { status: req.body.status },
@@ -71,7 +71,7 @@ router.patch('/:id/status', auth, async (req, res) => {
 });
 
 // DELETE task
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:id',  protect, async (req, res) => {
   const task = await Task.findByIdAndDelete(req.params.id);
   await Activity.create({
     type: 'task_deleted',

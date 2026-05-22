@@ -2,15 +2,15 @@
 const express = require('express');
 const router = express.Router();
 const Notification = require('../models/Notification');
-const auth = require('../middleware/auth');
+const { protect } = require('../middleware/auth');
 
-router.get('/', auth, async (req, res) => {
+router.get('/',  protect, async (req, res) => {
   const notifications = await Notification.find({ user: req.user.id })
     .sort({ createdAt: -1 });
   res.json(notifications);
 });
 
-router.patch('/:id/read', auth, async (req, res) => {
+router.patch('/:id/read',  protect, async (req, res) => {
   const notif = await Notification.findByIdAndUpdate(
     req.params.id, { read: true }, { new: true }
   );

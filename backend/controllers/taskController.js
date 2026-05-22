@@ -1,4 +1,6 @@
-const Task = require("../models/Task");
+const Task = require("../models/task");
+const Activity = require('../models/Activity');
+const Notification = require('../models/Notification');
 exports.createTask = async (req, res) => {
   try {
     const task = await Task.create(req.body);
@@ -67,6 +69,23 @@ exports.getMyTasks = async (req, res) => {
   try {
     const tasks = await Task.find({ assignedTo: req.user.id });
     res.json(tasks);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+exports.assignTask = async (req, res) => {
+  try {
+    const task = await Task.findByIdAndUpdate(
+      req.params.id, { assignedTo: req.body.assignedTo }, { new: true }
+    );
+    if (task.assignedTo) {
+      await Notification.create({
+        user: task.assignedTo,
+        message: `Une tâche vous a été assignée : "${task.title}"`,
+        project: task.project
+      });
+    }
+    res.json(task);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

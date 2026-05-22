@@ -1,10 +1,10 @@
 
 const express = require('express');
 const router = express.Router();
-const Task = require('../models/Task');
-const Project = require('../models/Project');
-const auth = require('../middleware/auth');
-router.get('/', auth, async (req, res) => {
+const Task = require('../models/task');
+const Project = require('../models/project');
+const { protect } = require('../middleware/auth');
+router.get('/',  protect, async (req, res) => {
     const userId = req.user.id;
     const now = new Date();
 
